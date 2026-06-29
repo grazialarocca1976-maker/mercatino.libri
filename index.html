@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercatino - Gestione Clienti e Libri</title>
+  <meta name="description" content="Gestione mercatino scolastico: clienti, deposito e vendita libri usati." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="glass">
+    <div class="header-left">
+      <span class="header-icon">&#128218;</span>
+      <h1>Mercatino Scolastico</h1>
+    </div>
+    <span class="mode-badge">&#x1F9EA; Modalita TEST &mdash; localStorage</span>
+  </header>
+
+  <main>
+    <div id="price-modal" class="modal">
+      <div class="modal-content">
+        <h2 id="pm-title"></h2>
+        <div id="pm-book-info"></div>
+        <input type="number" id="pm-price" placeholder="Prezzo" step="0.01" />
+        <div class="modal-actions">
+          <button id="pm-confirm" class="btn-deposita">Deposita</button>
+          <button id="pm-cancel" class="btn-secondary">Annulla</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ===== SEZIONE CLIENTI ===== -->
+    <section class="glass" id="client-section">
+      <h2>&#128100; Registrazione Cliente</h2>
+      <form id="client-form">
+        <div class="form-row">
+          <input type="text" id="firstName" placeholder="Nome *" required />
+          <input type="text" id="lastName" placeholder="Cognome *" required />
+        </div>
+        <div class="form-row">
+          <input type="tel" id="phone" placeholder="Cellulare * (es. 3456789012)" required />
+          <input type="email" id="email" placeholder="Email" />
+        </div>
+        <div class="form-row">
+          <input type="text" id="grade" placeholder="Classe (es. 3A)" />
+          <button type="submit" class="btn-full">&#43; Registra Cliente</button>
+        </div>
+      </form>
+
+      <div class="section-divider"></div>
+
+      <h2>&#128269; Cerca Cliente</h2>
+      <div class="search-row">
+        <input type="text" id="client-search" placeholder="Codice, Nome, Cognome, Email o Classe" />
+        <button id="clientSearchBtn">Cerca</button>
+        <button id="clearClientsBtn" class="btn-danger">Reset Clienti</button>
+      </div>
+      <ul id="client-search-result"></ul>
+
+      <h3>
+        Tutti i Clienti
+        <span id="client-count" class="count-badge">0 clienti</span>
+      </h3>
+      <ul id="client-list"></ul>
+    </section>
+
+    <!-- ===== SEZIONE LIBRI ===== -->
+    <section class="glass" id="book-section">
+
+      <!-- Pannello cliente attivo -->
+      <div class="ac-wrapper">
+        <div class="ac-header">
+          <span class="ac-label">&#9889; Cliente Attivo per questa sessione</span>
+          <span class="ac-sub">Cerca il cliente, selezionalo e poi usa Deposita / Vendi sui libri</span>
+        </div>
+
+        <!-- Stato: nessun cliente -->
+        <div id="ac-placeholder">
+          <div class="search-row">
+            <input type="text" id="ac-search" placeholder="Cerca per Codice, Nome o Cognome" />
+            <button id="ac-search-btn">Cerca Cliente</button>
+          </div>
+          <ul id="ac-results"></ul>
+        </div>
+
+        <!-- Stato: cliente selezionato -->
+        <div id="ac-display" style="display:none"></div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <h2>&#128196; Importazione Libri da CSV</h2>
+      <p class="hint">
+        Colonne riconosciute: <code>isbn</code>, <code>titolo/title</code>, <code>autore</code>,
+        <code>classe</code>, <code>materia</code>, <code>editore</code>, <code>prezzo</code>,
+        <code>nuova adozione</code>, <code>volume</code>, <code>note</code>.
+        I doppioni nel CSV vengono saltati automaticamente.
+      </p>
+      <div class="import-row">
+        <input type="file" id="csv-input" accept=".csv" />
+        <button id="importCsv">&#8659; Importa CSV</button>
+      </div>
+      <div id="book-count" class="book-count-badge">Nessun libro nel database</div>
+
+      <div class="section-divider"></div>
+
+      <h2>&#128270; Ricerca Libri</h2>
+      <div class="search-row">
+        <input type="text" id="book-search" placeholder="Titolo, ISBN, Autore, Materia o Classe" />
+        <button id="searchBtn">Cerca</button>
+        <button id="allBooksBtn" class="btn-secondary">Mostra Tutti</button>
+        <button id="clearBooksBtn" class="btn-danger">Reset Libri</button>
+      </div>
+      <ul id="book-list"></ul>
+    </section>
+
+    <div id="receipt-area" style="display:none"></div>
+  </main>
+  <script src="app.js"></script>
+  <div id="sezione-ricevuta" style="display: none;">
+    <!-- Questo blocco verrà riempito dal JavaScript solo al momento del clic -->
+  </div>
+</body>
+
+</html>
